@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2025 at 08:42 AM
+-- Generation Time: Feb 04, 2026 at 02:19 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -56,6 +56,14 @@ CREATE TABLE `cart` (
   `image` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `user_id`, `pid`, `name`, `price`, `quantity`, `image`) VALUES
+(41, 40, 62, 'Collar', 500, 1, 'Educ ColSC mockup copy.jpg'),
+(42, 40, 63, 't-shirt 123', 550, 1, 'wallpaper.png');
+
 -- --------------------------------------------------------
 
 --
@@ -75,8 +83,9 @@ CREATE TABLE `conversations` (
 --
 
 INSERT INTO `conversations` (`id`, `user_id`, `admin_id`, `created_at`, `updated_at`) VALUES
-(1, 40, 1, '2025-10-05 06:34:40', '2025-10-05 06:37:20'),
-(2, 41, 1, '2025-10-05 06:35:49', '2025-10-05 06:37:00');
+(1, 40, 1, '2025-10-05 06:34:40', '2025-12-07 11:11:30'),
+(2, 41, 1, '2025-10-05 06:35:49', '2025-10-05 07:26:11'),
+(3, 56, 1, '2025-11-05 12:25:00', '2025-11-05 12:25:34');
 
 -- --------------------------------------------------------
 
@@ -106,9 +115,20 @@ INSERT INTO `conversation_messages` (`id`, `conversation_id`, `sender_type`, `se
 (21, 2, 'user', 41, 'oo namn', 1, '2025-10-05 06:36:17'),
 (22, 1, 'user', 40, 'hi po', 1, '2025-10-05 06:36:42'),
 (23, 1, 'admin', 3, 'o hello', 1, '2025-10-05 06:36:55'),
-(24, 2, 'admin', 3, 'oo naman', 0, '2025-10-05 06:37:00'),
+(24, 2, 'admin', 3, 'oo naman', 1, '2025-10-05 06:37:00'),
 (25, 1, 'user', 40, 'gagu kaba', 1, '2025-10-05 06:37:13'),
-(26, 1, 'admin', 3, 'kiffum', 1, '2025-10-05 06:37:20');
+(26, 1, 'admin', 3, 'kiffum', 1, '2025-10-05 06:37:20'),
+(27, 2, 'user', 41, 'pepet', 1, '2025-10-05 07:25:38'),
+(28, 2, 'admin', 3, 'balaya butu', 1, '2025-10-05 07:25:57'),
+(29, 2, 'user', 41, 'k fie', 1, '2025-10-05 07:26:06'),
+(30, 2, 'admin', 3, 'kiffum', 1, '2025-10-05 07:26:11'),
+(31, 1, 'admin', 3, 'wazzzup', 1, '2025-10-05 07:26:16'),
+(32, 1, 'user', 40, 'heyy', 1, '2025-10-05 07:27:48'),
+(33, 3, 'user', 56, 'wow astig', 1, '2025-11-05 12:25:08'),
+(34, 3, 'admin', 3, 'opkors', 1, '2025-11-05 12:25:19'),
+(35, 3, 'user', 56, 'hiii', 1, '2025-11-05 12:25:27'),
+(36, 3, 'admin', 3, 'yes?', 1, '2025-11-05 12:25:34'),
+(37, 1, 'user', 40, 'asdsa', 0, '2025-12-07 11:11:30');
 
 -- --------------------------------------------------------
 
@@ -202,6 +222,7 @@ CREATE TABLE `orders` (
   `total_products` text DEFAULT NULL,
   `total_price` decimal(10,2) NOT NULL,
   `gcash_ref` varchar(50) DEFAULT NULL,
+  `gcash_screenshot` varchar(255) DEFAULT NULL,
   `placed_on` datetime NOT NULL DEFAULT current_timestamp(),
   `payment_status` varchar(20) NOT NULL DEFAULT 'pending',
   `expected_delivery_date` date DEFAULT NULL,
@@ -213,6 +234,28 @@ CREATE TABLE `orders` (
   `admin_response_message` text DEFAULT NULL,
   `cancel_processed_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `product_id`, `type`, `quantity`, `size`, `price`, `design_file`, `name`, `number`, `email`, `method`, `address`, `total_products`, `total_price`, `gcash_ref`, `gcash_screenshot`, `placed_on`, `payment_status`, `expected_delivery_date`, `status`, `status_updated_at`, `cancel_reason`, `cancelled_at`, `cancel_approval_status`, `admin_response_message`, `cancel_processed_at`) VALUES
+(50, 40, NULL, NULL, NULL, NULL, NULL, NULL, 'Lucky Keith Padua', '09930512859', 'luckypadua4@gmail.com', 'Cash On Delivery', 'Centro Sur', 't-shirt 123 (₱550 x 99)', 54450.00, NULL, NULL, '2025-10-05 20:33:16', 'pending', '2025-10-05', 'delivered', '2025-10-05 12:33:38', NULL, NULL, NULL, NULL, NULL),
+(51, 40, NULL, NULL, NULL, NULL, NULL, NULL, 'Lucky Keith Padua', '09930512859', 'luckypadua4@gmail.com', 'Cash On Delivery', 'Centro Sur', 'Collar (₱500 x 99)', 49500.00, NULL, NULL, '2025-10-05 20:47:26', 'pending', NULL, 'cancelled', '2025-10-16 09:56:12', '', '2025-10-16 17:56:12', NULL, NULL, NULL),
+(52, 40, NULL, NULL, NULL, NULL, NULL, NULL, 'Lucky Keith Padua', '09930512859', 'luckypadua4@gmail.com', 'Cash On Delivery', 'Centro Sur', 'Collar (₱500 x 1)', 500.00, NULL, NULL, '2025-10-16 19:46:51', 'pending', '2025-10-16', 'received', '2025-10-18 12:25:25', NULL, NULL, NULL, NULL, NULL),
+(53, 40, NULL, NULL, NULL, NULL, NULL, NULL, 'Lucky Keith Padua', '09930512859', 'luckypadua4@gmail.com', 'Cash On Delivery', 'Centro Sur', 'Collar (₱500 x 99)', 49500.00, NULL, NULL, '2025-10-18 20:25:59', 'pending', '2025-10-18', 'received', '2025-10-18 12:26:38', NULL, NULL, NULL, NULL, NULL),
+(54, 40, NULL, NULL, NULL, NULL, NULL, NULL, 'Lucky Keith Padua', '09930512859', 'luckypadua4@gmail.com', 'Cash On Delivery', 'Centro Sur', 't-shirt 123 (₱550 x 1)', 550.00, NULL, NULL, '2025-11-05 16:55:06', 'pending', '0000-00-00', 'Pre Order', '2025-11-06 00:05:06', '', '2025-11-06 08:04:44', NULL, NULL, NULL),
+(55, 40, NULL, NULL, NULL, NULL, NULL, NULL, 'Lucky Keith Padua', '09930512859', 'luckypadua4@gmail.com', 'Cash On Delivery', 'Centro Sur', 't-shirt 123 (₱550 x 1)', 550.00, NULL, NULL, '2025-11-05 16:57:40', 'pending', NULL, 'pending', '2025-11-05 08:57:40', NULL, NULL, NULL, NULL, NULL),
+(56, 40, NULL, NULL, NULL, NULL, NULL, NULL, 'Lucky Keith Padua', '09930512859', 'luckypadua4@gmail.com', 'Cash On Delivery', 'Centro Sur', 't-shirt 123 (₱550 x 1)', 550.00, NULL, NULL, '2025-11-05 16:59:46', 'pending', NULL, 'pending', '2025-11-05 08:59:46', NULL, NULL, NULL, NULL, NULL),
+(57, 40, NULL, NULL, NULL, NULL, NULL, NULL, 'Lucky Keith Padua', '09930512859', 'luckypadua4@gmail.com', 'Cash On Delivery', 'Centro Sur', 't-shirt 123 (₱550 x 1)', 550.00, NULL, NULL, '2025-11-05 17:00:13', 'pending', NULL, 'pending', '2025-11-05 09:00:13', NULL, NULL, NULL, NULL, NULL),
+(58, 40, NULL, NULL, NULL, NULL, NULL, NULL, 'Lucky Keith Padua', '09930512859', 'luckypadua4@gmail.com', 'Gcash', 'Centro Sur', 't-shirt 123 (₱550 x 1)', 550.00, 'asdsad', NULL, '2025-11-05 17:00:26', 'pending', NULL, 'pending', '2025-11-05 09:00:26', NULL, NULL, NULL, NULL, NULL),
+(59, 56, NULL, NULL, NULL, NULL, NULL, NULL, 'Chrizel Jane Palafox', '09031232131', 'chrizeljanegonzales@gmail.com', 'Cash On Delivery', 'Piat Cagayan', 'Collar (₱500 x 1)', 500.00, NULL, NULL, '2025-11-05 19:41:36', 'pending', '2025-11-22', 'To Received', '2025-11-05 11:46:28', NULL, NULL, NULL, NULL, NULL),
+(60, 56, NULL, NULL, NULL, NULL, NULL, NULL, 'Chrizel Jane Palafox', '09031232131', 'chrizeljanegonzales@gmail.com', 'Cash On Delivery', 'Piat Cagayan', 'Collar (₱500 x 1)', 500.00, NULL, NULL, '2025-11-05 19:42:40', 'pending', '2025-11-18', 'delivered', '2025-11-05 11:45:56', NULL, NULL, NULL, NULL, NULL),
+(61, 56, NULL, NULL, NULL, NULL, NULL, NULL, 'Chrizel Jane Palafox', '09031232131', 'chrizeljanegonzales@gmail.com', 'Gcash', 'Piat Cagayan', 'Collar (₱500 x 1)', 500.00, NULL, '690b39fde4407_gcash_asf.jpg', '2025-11-05 19:50:21', 'pending', '0000-00-00', 'cancelled', '2025-11-05 12:19:13', '', '2025-11-05 20:19:13', NULL, NULL, NULL),
+(62, 56, NULL, NULL, NULL, NULL, NULL, NULL, 'Chrizel Jane Palafox', '09031232131', 'chrizeljanegonzales@gmail.com', 'Cash On Delivery', 'Piat Cagayan', 't-shirt 123 (₱550 x 1)', 550.00, NULL, NULL, '2025-11-05 20:14:09', 'pending', '0000-00-00', 'Pre Order', '2025-11-05 12:14:36', '', '2025-11-05 20:14:22', NULL, NULL, NULL),
+(63, 56, NULL, NULL, NULL, NULL, NULL, NULL, 'Chrizel Jane Palafox', '09031232131', 'chrizeljanegonzales@gmail.com', 'Cash On Delivery', 'Piat Cagayan', 'Collar (₱500 x 1)', 500.00, NULL, NULL, '2025-11-05 20:36:54', 'pending', NULL, 'cancelled', '2025-11-05 12:37:03', '', '2025-11-05 20:37:03', NULL, NULL, NULL),
+(64, 45, NULL, NULL, NULL, NULL, NULL, NULL, 'Brian Jay Ilac', '09123213213', 'lovebrianjayilac@gmail.com', 'Cash On Delivery', 'Lasam', 'Collar (₱500 x 1)', 500.00, NULL, NULL, '2025-11-07 10:53:35', 'pending', NULL, 'pending', '2025-11-07 02:53:35', NULL, NULL, NULL, NULL, NULL),
+(65, 45, NULL, NULL, NULL, NULL, NULL, NULL, 'Brian Jay Ilac', '09123213213', 'lovebrianjayilac@gmail.com', 'Cash On Delivery', 'Lasam', 'Collar (₱500 x 1)', 500.00, NULL, NULL, '2025-11-07 10:53:39', 'pending', '2025-12-07', 'To Received', '2025-12-07 11:07:52', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -242,7 +285,23 @@ INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `quantity`, `price`
 (7, 46, 64, 1, 600.00),
 (8, 47, 64, 1, 600.00),
 (9, 48, 62, 1, 500.00),
-(10, 49, 63, 1, 550.00);
+(10, 49, 63, 1, 550.00),
+(11, 50, 63, 99, 550.00),
+(12, 51, 62, 99, 500.00),
+(13, 52, 62, 1, 500.00),
+(14, 53, 62, 99, 500.00),
+(15, 54, 63, 1, 550.00),
+(16, 55, 63, 1, 550.00),
+(17, 56, 63, 1, 550.00),
+(18, 57, 63, 1, 550.00),
+(19, 58, 63, 1, 550.00),
+(20, 59, 62, 1, 500.00),
+(21, 60, 62, 1, 500.00),
+(22, 61, 62, 1, 500.00),
+(23, 62, 63, 1, 550.00),
+(24, 63, 62, 1, 500.00),
+(25, 64, 62, 1, 500.00),
+(26, 65, 62, 1, 500.00);
 
 -- --------------------------------------------------------
 
@@ -259,6 +318,14 @@ CREATE TABLE `order_ratings` (
   `review` text DEFAULT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_ratings`
+--
+
+INSERT INTO `order_ratings` (`id`, `order_id`, `user_id`, `product_id`, `rating`, `review`, `created_at`) VALUES
+(6, 52, 40, 62, 5, '', '2025-10-18 20:25:32'),
+(7, 53, 40, 62, 5, 'wow bilis', '2025-10-18 20:26:51');
 
 -- --------------------------------------------------------
 
@@ -284,8 +351,7 @@ INSERT INTO `products` (`id`, `name`, `category`, `price`, `image`) VALUES
 (58, 'Sticker', 'Customize stickers', 300, '02.png'),
 (61, 'Chinese Collar', 'Full sublimation', 500, 'CA ML mockup copy.jpg'),
 (62, 'Collar', 'Full sublimation', 500, 'Educ ColSC mockup copy.jpg'),
-(63, 't-shirt 123', 'Full sublimation', 550, 'wallpaper.png'),
-(64, 't-shirt', 'Full sublimation', 600, 'a3d40bc0-2088-4ed3-bba1-76b49f751703.jpg');
+(63, 't-shirt 123', 'Full sublimation', 550, 'wallpaper.png');
 
 -- --------------------------------------------------------
 
@@ -330,7 +396,14 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `number`, `password`, `address`, `valid_id`, `security_question_1`, `security_answer_1`, `security_question_2`, `security_answer_2`, `security_question_3`, `security_answer_3`) VALUES
 (40, 'Lucky Keith Padua', 'luckypadua4@gmail.com', '09930512859', '$2y$10$N2Q1Bhjv7f6WFWc.q16puOqkaBlNQ0EYpNkoQ1AE8FwenTtIJbAO2', 'Centro Sur', 'uploaded_ids/68dccee3a0f52_ATTY.png', 'What is your favorite movie?', '123', 'What is your dream job?', '123', 'What is your pet&#39;s name?', '123'),
-(41, 'Glenard U Pagurayan', 'glenard2308@gmail.com', '09557997409', '$2y$10$Uwb7vk/v0.pXMVOhiNMv6.SOOkY3SudMtg38IJ9Wf.NQ7IsNmphnK', 'Bishan St. 23', 'uploaded_ids/68de3fc96bb6c_33156cec-27ae-4f0d-85ce-40934523e639.jpg', 'What is your favorite movie?', '123', 'What city were you born in?', '123', 'Who is your childhood hero?', '123');
+(43, 'LuckyPadua', 'luckypadua1@gmail.com', '09059353907', '$2y$10$Uzoa1WaaaWa0/8sFN4PHO.9ZWx91NS05BVXzI7bHyn4QETbR9ahBa', 'Piat ', 'uploaded_ids/690af01a8b874_trademark1.jpg', 'What is your favorite movie?', 'qwe', 'What is your dream job?', 'qwe', 'What is your pet&#39;s name?', 'qwe'),
+(44, 'Jomar Medina', 'medinajomar69@gmail.com', '09213213213', '$2y$10$AIBhi/89ILf9H4j8ieIkVuhGUGyz2TpJx7eUZsrW18K5jj6anjPRW', 'Solana', 'uploaded_ids/690af286116fa_asf.jpg', 'What is your favorite movie?', 'qew', 'What is your dream job?', 'qwe', 'What is your pet&#39;s name?', 'qwe'),
+(45, 'Brian Jay Ilac', 'lovebrianjayilac@gmail.com', '09123213213', '$2y$10$pazhTNbx5mkZIqPih1/nfOKbBArnYvomSAyFJT.dZdZZDRW5KeQSS', 'Lasam', 'uploaded_ids/690af36ed47f7_trademark1.jpg', 'What is your favorite movie?', 'asd', 'What is your dream job?', 'asd', 'What is your pet&#39;s name?', 'asd'),
+(46, 'Lucky Padua', 'luckybaltazar21@gmail.com', '09132132132', '$2y$10$4t23SPiazOg3T1CLeWfDNe5rgYgZk1dRFw/kUKatKsdkyV9APTzvO', 'Piat', 'uploaded_ids/690af3f5e65bd_asf.jpg', 'What is your favorite movie?', 'qwe', 'What is your dream job?', 'qwe', 'What is your pet&#39;s name?', 'qwe'),
+(49, 'Brian ', 'brianjayilac05@gmail.com', '09213213213', '$2y$10$G833LYwgHRxY0d51w0Q.0O1bPROJyUn4WU3M/D3vU3sdnSVrSqHVu', 'Lasam', 'uploaded_ids/690b0bdce3245_trademark.jpg', 'What is your favorite movie?', 'qwe', 'What is your dream job?', 'qwe', 'What is your pet&#39;s name?', 'qwe'),
+(52, 'Lucky Baltazar Padua', 'luckypadua03@gmail.com', '09213213213', '$2y$10$XSHlfBKm/kTgthDSsmIaS.OEFovVlkUU1nD8JH1DvPWbierGEX24m', 'Poblacion 1', 'uploaded_ids/690b0d3ef11e9_JOY.jpg', 'What is your favorite movie?', 'qwe', 'What is your dream job?', 'qwe', 'What is your pet&#39;s name?', 'qwe'),
+(53, 'Lucky', 'luckypadua123@gmail.com', '09123213213', '$2y$10$z2T.titgjU8oJCTl.dctY.2c71wozN2ERryVSY5orn9Q/AXKFL4pi', 'Faire, Cagayan', 'uploaded_ids/690b0e05b39db_Skye.jpg', 'What is your favorite movie?', 'qew', 'What is your dream job?', 'qwe', 'What school did you go to?', 'qwe'),
+(56, 'Chrizel Jane Palafox', 'chrizeljanegonzales@gmail.com', '09031232131', '$2y$10$ldtHeYPKZIExVsuyQpXnje6oW9I5heUlHaNe2uu5Kfa1yhyQT0KFO', 'Piat Cagayan', 'uploaded_ids/690b3735b6d81_JOY.jpg', 'What is your favorite movie?', 'qwe', 'What is your dream job?', 'qwe', 'What is your pet&#39;s name?', 'qwe');
 
 --
 -- Indexes for dumped tables
@@ -431,19 +504,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `conversations`
 --
 ALTER TABLE `conversations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `conversation_messages`
 --
 ALTER TABLE `conversation_messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -461,19 +534,19 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `order_ratings`
 --
 ALTER TABLE `order_ratings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -491,7 +564,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- Constraints for dumped tables
