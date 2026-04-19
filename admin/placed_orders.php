@@ -147,7 +147,11 @@ if (isset($_POST['update_order'])) {
    $order_status = $_POST['order_status'] ?? '';
    $expected_delivery_date = $_POST['expected_delivery_date'] ?? '';
    
-   if ($order_id && $order_status) {
+   // NEW VALIDATION: Check if expected delivery date is empty
+   if (empty($expected_delivery_date)) {
+      $messages[] = ['text' => 'You must input an expected delivery date before updating!', 'type' => 'error'];
+   } 
+   elseif ($order_id && $order_status) {
       // Get current order details for email
       $get_order = $conn->prepare("SELECT * FROM `orders` WHERE id = ?");
       $get_order->execute([$order_id]);
@@ -158,30 +162,25 @@ if (isset($_POST['update_order'])) {
          $update_order = $conn->prepare("UPDATE `orders` SET status = ?, expected_delivery_date = ? WHERE id = ?");
          $update_order->execute([$order_status, $expected_delivery_date, $order_id]);
          
-         // Send email notification to customer
+         // Send email notification logic...
          $customer_email = $order_data['email'];
          $customer_name = $order_data['name'];
          
-         // Prepare order details for email
          $order_details = "Order ID: #" . $order_id . "\n";
          $order_details .= "Total Amount: ₱" . number_format($order_data['total_price'], 2) . "\n";
          $order_details .= "Payment Method: " . $order_data['method'] . "\n";
-         
-         if (!empty($expected_delivery_date)) {
-            $order_details .= "Expected Delivery: " . date('F j, Y', strtotime($expected_delivery_date)) . "\n";
-         }
+         $order_details .= "Expected Delivery: " . date('F j, Y', strtotime($expected_delivery_date)) . "\n";
          
          if (!empty($order_data['total_products'])) {
             $order_details .= "Products: " . $order_data['total_products'];
          }
          
-         // Send email notification
          $email_sent = sendOrderStatusEmail($customer_email, $customer_name, $order_id, $order_status, $order_details);
          
          if ($email_sent) {
-            $messages[] = ['text' => 'Order updated successfully and email notification sent to customer!', 'type' => 'success'];
+            $messages[] = ['text' => 'Order updated successfully and email notification sent!', 'type' => 'success'];
          } else {
-            $messages[] = ['text' => 'Order updated successfully, but email notification failed to send.', 'type' => 'warning'];
+            $messages[] = ['text' => 'Order updated, but email failed to send.', 'type' => 'warning'];
          }
       } else {
          $messages[] = ['text' => 'Order not found!', 'type' => 'error'];
